@@ -1,6 +1,7 @@
+import os
 import torch
-import torch.nn.functional as F 
-from torch.utils.data import DataLoader 
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
 
 from dataset import TransitionDataset
 from encoder import Encoder, Predictor
@@ -21,9 +22,9 @@ def variance_reg(z, eps=1e-4):
 
     
 def main(): 
-    # MX330 (sm_61) không tương thích bản torch này -> ép CPU.
-    # Khi chạy trên GPU tương thích, đổi lại: "cuda" if torch.cuda.is_available() else "cpu"
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    # Tự động: GPU nếu có (vd Colab T4), ngược lại CPU.
+    # Máy có MX330 (sm_61) không chạy CUDA bản torch này -> chạy: DEVICE=cpu python train.py
+    device = os.environ.get("DEVICE", "cuda" if torch.cuda.is_available() else "cpu")
     print("device:", device)
 
     
