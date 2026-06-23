@@ -52,7 +52,7 @@ def main():
 
             # forward 
             z_t = enc(o_t) # enc o_t
-            z_t1_target = enc(o_t1).detact()  # enc o_{t+1} (target, KHÔNG stop-grad)
+            z_t1_target = enc(o_t1).detach()  # enc o_{t+1} (target, KHÔNG stop-grad)
             z_t1_pred = pred(z_t, a_t) # đoán z_{t+1} từ z_t + a_t
 
             # loss
