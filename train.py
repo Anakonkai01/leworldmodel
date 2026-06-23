@@ -48,6 +48,7 @@ def main():
     # loop 
     for epoch in range(EPOCHS): 
         tot_pred, tot_var, n = 0.0, 0.0, 0.0
+        tot_id = 0.0
         for o_t, a_t, o_t1 in loader: 
             o_t, a_t, o_t1 = o_t.to(device), a_t.to(device), o_t1.to(device)
 
@@ -69,10 +70,11 @@ def main():
  
             # cal tot loss in a batch = 64 
             tot_pred += L_pred.item(); tot_var += L_var.item(); n+= 1
+            tot_id += L_id.item()
 
         with torch.no_grad(): 
             std_mean = torch.std(z_t, dim=0).mean().item()
-        print(f"epoch {epoch:2d} | L_pred {tot_pred/n:.4f} | L_var {tot_var/n:.4f} | z_std {std_mean:.3f}")
+        print(f"epoch {epoch:2d} | L_pred {tot_pred/n:.4f} | L_id {tot_id/n:.4f} | L_var {tot_var/n:.4f} | z_std {std_mean:.3f}")
 
     torch.save({"enc": enc.state_dict(), "pred": pred.state_dict()}, "world_model.pt")
     print("saved")
