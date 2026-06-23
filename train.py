@@ -59,6 +59,7 @@ def main():
             # loss
             L_pred = F.mse_loss(z_t1_pred, z_t1_target)
             L_var = variance_reg(torch.cat([z_t, z_t1_target], dim=0)) # chống encoder collapse
+            L_id = F.mse_loss(z_t, z_t1_target) # check if z_t ~ z_t1_pred, if they the same, model learn nothing, it ignore the action  
             loss = L_pred + LAMBDA * L_var
 
             # step
