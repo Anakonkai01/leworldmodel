@@ -23,7 +23,7 @@ def variance_reg(z, eps=1e-4):
 def main(): 
     # MX330 (sm_61) không tương thích bản torch này -> ép CPU.
     # Khi chạy trên GPU tương thích, đổi lại: "cuda" if torch.cuda.is_available() else "cpu"
-    device = "cpu"
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     print("device:", device)
 
     
