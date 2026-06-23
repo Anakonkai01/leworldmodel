@@ -22,8 +22,6 @@ def variance_reg(z, eps=1e-4):
 
     
 def main(): 
-    # Tự động: GPU nếu có (vd Colab T4), ngược lại CPU.
-    # Máy có MX330 (sm_61) không chạy CUDA bản torch này -> chạy: DEVICE=cpu python train.py
     device = os.environ.get("DEVICE", "cuda" if torch.cuda.is_available() else "cpu")
     print("device:", device)
 

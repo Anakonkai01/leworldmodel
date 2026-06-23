@@ -12,6 +12,7 @@ from torch.utils.data import Dataset, DataLoader
 
 
 V_MAX, OMEGA_MAX = 160.0, 2.5 # normalize later 
+FRAME_STRIDE = 6
 
 class TransitionDataset(Dataset): 
     def __init__(self, data_dir="data"):
@@ -23,7 +24,7 @@ class TransitionDataset(Dataset):
             d = np.load(file)
             obs, actions = d["obs"], d["actions"]
             self.episodes.append((obs, actions)) # list of tuple 
-            for t in range(len(obs) - 1): # because we need t + 1 
+            for t in range(len(obs) - FRAME_STRIDE): # because we need t + 1 
                 self.index.append((ep_i, t))
                 
 
@@ -43,7 +44,7 @@ class TransitionDataset(Dataset):
         
         # get the state of frame t of that ep_i 
         o_t = self._img(obs[t])
-        o_t1 = self._img(obs[t+1])
+        o_t1 = self._img(obs[t+FRAME_STRIDE])
         a_t = torch.tensor([actions[t, 0]/V_MAX, actions[t, 1]/OMEGA_MAX], dtype=torch.float32)     
 
         return o_t, a_t, o_t1
