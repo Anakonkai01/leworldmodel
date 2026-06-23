@@ -52,12 +52,13 @@ def main():
 
             # forward 
             z_t = enc(o_t) # enc o_t
-            z_t1_target = enc(o_t1)  # enc o_{t+1} (target, KHÔNG stop-grad)
+            z_t1_target = enc(o_t1).detact()  # enc o_{t+1} (target, KHÔNG stop-grad)
             z_t1_pred = pred(z_t, a_t) # đoán z_{t+1} từ z_t + a_t
 
             # loss
             L_pred = F.mse_loss(z_t1_pred, z_t1_target)
-            L_var = variance_reg(torch.cat([z_t, z_t1_target], dim=0)) # chống encoder collapse
+            # L_var = variance_reg(torch.cat([z_t, z_t1_target], dim=0)) # chống encoder collapse
+            L_var = variance_reg(z_t)
             L_id = F.mse_loss(z_t, z_t1_target) # check if z_t ~ z_t1_pred, if they the same, model learn nothing, it ignore the action  
             loss = L_pred + LAMBDA * L_var
 
