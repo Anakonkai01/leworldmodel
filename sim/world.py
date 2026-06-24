@@ -165,16 +165,16 @@ def make_world():
         "car": {"x": 300.0, "y": 300.0, "theta": 0.0}, # pos + direction (radian)
         "goal": {"x": 500.0, "y": 120.0},
         "obstacles": [
-            {"x": 250, "y": 150, "w": 80, "h": 80}, 
-            {"x": 550, "y": 250, "w": 80, "h": 80}, 
-            {"x": 350, "y": 350, "w": 80, "h": 80}, 
+        #     {"x": 250, "y": 150, "w": 80, "h": 80}, 
+        #     {"x": 550, "y": 250, "w": 80, "h": 80}, 
+        #     {"x": 350, "y": 350, "w": 80, "h": 80}, 
         ],
         "car_radius": 28, 
         "goal_radius": 12,
     }
 
 
-def draw_world(screen, world, draw_goal=True): 
+def draw_world(screen, world, draw_goal=False): 
     "only read world and draw, not change the world"
     # reset background
     screen.fill(BACKGROUND)
